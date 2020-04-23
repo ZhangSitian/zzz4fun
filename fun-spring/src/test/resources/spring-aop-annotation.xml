@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd ">
+    <!--自动创建代理类-->
+    <aop:aspectj-autoproxy/>
+    <!--切面-->
+    <bean id="audience" class="com.zzz.learn.aspect.Audience"/>
+    <!--带餐切面-->
+    <bean id="magician" class="com.zzz.learn.aspect.Magician"/>
+    <!--新增功能的切面-->
+    <bean class="com.zzz.learn.aspect.ContestantIntroducer"/>
+    <!--被切的thinker-->
+    <bean id="volunteer" class="com.zzz.learn.domain.thinker.Volunteer"/>
+    <!--使用默认构造器构造实例-->
+    <bean id="duke" class="com.zzz.learn.domain.performer.Juggler"/>
+
+    <!--使用含参构造器构造实例-->
+    <bean id="dukeConstructor" class="com.zzz.learn.domain.performer.Juggler">
+        <constructor-arg value="15"/>
+    </bean>
+
+
+</beans>
+

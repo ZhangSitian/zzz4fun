@@ -1,0 +1,115 @@
+new SqlSessionFactoryBuilder() 创建SqlSessionFactoryBuilder
+SqlSessionFactoryBuilder.build() 构建sqlSessionFactory
+    new XMLConfigBuilder() 创建XMLConfigBuilder
+        new XPathParser() 创建XPathParser
+            this.xpath = XPathFactory.newInstance().newXPath() 初始化xpath
+            new XMLMapperEntityResolver() 初始化EntityResolver，不用联网去获取DTD
+            createDocument() 创建document
+                DocumentBuilderFactory.newInstance() 初始化DocumentBuilderFactory
+                factory.newDocumentBuilder() 初始化DocumentBuilder
+                builder.parse(inputSource) 解析输入xml配置，解析为Document
+        super(new Configuration()) 初始化Configuration
+            TODO
+
+    XMLConfigBuilder.parse() 解析配置
+        parseConfiguration(parser.evalNode("/configuration")) 解析根节点
+            propertiesElement(root.evalNode("properties")) 解析properties
+                context.getChildrenAsProperties() 把子节点解析为Properties
+                defaults.putAll(Resources.getResourceAsProperties(resource)) 把引用资源resource加到Properties
+                defaults.putAll(Resources.getUrlAsProperties(url)) 把引用资源url加到Properties
+                defaults.putAll(configuration.getVariables()) 当做参数传入的加入
+                configuration.setVariables(defaults) 重新给到configuration的variables属性中
+            typeAliasesElement(root.evalNode("typeAliases")) 解析别名
+                configuration.getTypeAliasRegistry().registerAliases(typeAliasPackage) 去包下找类注册别名
+                    [有@Alias注解则用，没有则取类的simpleName]
+                typeAliasRegistry.registerAlias(alias, clazz) 注册别名和类
+
+            pluginElement(root.evalNode("plugins")) 插件
+                configuration.addInterceptor(interceptorInstance) 添加插件
+                    interceptorChain.addInterceptor(interceptor) 添加到插件的集合
+
+            objectFactoryElement(root.evalNode("objectFactory")) 对象工厂
+                configuration.setObjectFactory(factory) 添加到对象池
+
+            objectWrapperFactoryElement(root.evalNode("objectWrapperFactory")) 对象包装工厂
+                configuration.setObjectWrapperFactory(factory) 添加到对象包装工厂
+
+            settingsElement(root.evalNode("settings")) 设置
+                configuration.setAutoMappingBehavior() 自动映射结果，resultMap去重，默认为PARTIAL
+                configuration.setCacheEnabled() 设置缓存，默认为true
+                configuration.setProxyFactory() proxyFactory (CGLIB | JAVASSIST)
+                configuration.setLazyLoadingEnabled() 延迟加载，默认false
+                configuration.setAggressiveLazyLoading() 延迟加载时，每种属性是否还要按需加载，默认true
+                configuration.setMultipleResultSetsEnabled() 允不允许多种结果集从一个单独的语句中返回，默认true
+                configuration.setUseColumnLabel() 使用列标签代替列名，默认true
+                configuration.setUseGeneratedKeys() 允许 JDBC 支持生成的键，默认false
+                configuration.setDefaultExecutorType() 配置默认的执行器，默认SIMPLE
+                configuration.setDefaultStatementTimeout() 超时时间
+                configuration.setMapUnderscoreToCamelCase() 是否将DB字段自动映射到驼峰式Java属性，默认false
+                configuration.setSafeRowBoundsEnabled() 嵌套语句上使用RowBounds，默认false
+                configuration.setLocalCacheScope() 默认用session级别的缓存
+                configuration.setJdbcTypeForNull() 为null值设置jdbctype
+                configuration.setLazyLoadTriggerMethods() Object的哪些方法将触发延迟加载
+                configuration.setSafeResultHandlerEnabled() 使用安全的ResultHandler，默认true
+                configuration.setDefaultScriptingLanguage() 动态SQL生成语言所使用的脚本语言
+                configuration.setCallSettersOnNulls() 当结果集中含有Null值时是否执行映射对象的setter或者Map对象的put方法，默认false
+                configuration.setLogPrefix() logger名字的前缀
+                configuration.setLogImpl() 显式定义用什么log框架，默认自动发现jar包
+                configuration.setConfigurationFactory() 配置工厂
+
+            environmentsElement(root.evalNode("environments")) 环境
+                environment = context.getStringAttribute("default") 取到默认的environmentId
+                configuration.setEnvironment(environmentBuilder.build()) 设置environment
+            databaseIdProviderElement(root.evalNode("databaseIdProvider")) databaseIdProvider
+                可以根据不同数据库执行不同的SQL，sql要加databaseId属性(不实用)
+                configuration.setDatabaseId(databaseId) 设置数据库类型
+            typeHandlerElement(root.evalNode("typeHandlers")) 类型处理器
+                typeHandlerRegistry.register(typeHandlerPackage) 调用TypeHandlerRegistry.register，去包下找所有类
+                typeHandlerRegistry.register(javaTypeClass, jdbcType, typeHandlerClass) 调用TypeHandlerRegistry.register
+            mapperElement(root.evalNode("mappers")) 映射器
+                new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments()) 创建XMLMapperBuilder
+                mapperParser.parse() 开始解析 TODO
+
+    DefaultSqlSessionFactory(config) 创建SqlSessionFactory
+
+SqlSessionFactory.openSession() 开启sqlSession
+  openSessionFromDataSource(configuration.getDefaultExecutorType(), null, false) 得到sqlSession，autoCommit默认为false
+    configuration.getDefaultExecutorType() 默认的ExecutorType
+    事务等级默认为null
+    autoCommit默认为false
+    getTransactionFactoryFromEnvironment(environment) 创建事务工厂
+    transactionFactory.newTransaction(environment.getDataSource(), level, autoCommit) 创建事务
+    configuration.newExecutor(tx, execType) 创建Executor
+    new DefaultSqlSession(configuration, executor, autoCommit) 创建SqlSession
+
+sqlSession.selectList("test.findProductByName", "burger") 调用JDBC查询数据库
+  selectList(String statement, Object parameter, RowBounds rowBounds) 查询方法
+    configuration.getMappedStatement(statement) 根据statementId找到对应的MappedStatement
+    executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER) 用执行器查询结果
+      ms.getBoundSql(parameter) 得到绑定sql
+      createCacheKey(ms, parameter, rowBounds, boundSql) 创建缓存Key
+      query(ms, parameter, rowBounds, resultHandler, key, boundSql) 查询结果
+        list = resultHandler == null ? (List<E>) localCache.getObject(key) : null 先查缓存
+        若查到localCache缓存，处理localOutputParameterCache
+        queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql) 否则从数据库查
+        deferredLoad.load() 延迟加载队列中所有元素
+        deferredLoads.clear() 清空延迟加载队列
+        clearLocalCache() 如果是STATEMENT，清本地缓存
+
+sqlSession.close() 关闭sqlSession
+  executor.close(isCommitOrRollbackRequired(false))
+    clearLocalCache() 清本地缓存
+    flushStatements(true) 刷新语句，Batch用
+  dirty = false 每次close之后，dirty标志设为false
+
+
+
+
+
+
+
+
+
+ErrorContext
+Enum.valueOf
+Boolean.valueOf

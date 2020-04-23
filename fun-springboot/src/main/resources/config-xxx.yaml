@@ -1,0 +1,32 @@
+dataSources:
+  ds0: !!org.apache.commons.dbcp.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sharding_0
+    username: root
+    password: !QAZ2wsx
+  ds1: !!org.apache.commons.dbcp.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sharding_1
+    username: root
+    password: !QAZ2wsx
+
+shardingRule:
+  tables:
+    t_user:
+      actualDataNodes: sharding_${0..1}.t_user_0${0..1}
+      tableStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: t_user_0${user_id % 2}
+
+  defaultDataSourceName: sharding_0
+  defaultDatabaseStrategy:
+    inline:
+      shardingColumn: user_id
+      algorithmExpression: t_user_0${user_id % 2}
+  defaultTableStrategy:
+    none:
+  defaultKeyGeneratorClassName: io.shardingsphere.core.keygen.DefaultKeyGenerator
+
+props:
+  sql.show: true

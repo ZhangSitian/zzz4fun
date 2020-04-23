@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--建议：不要在properties元素体内添加任何属性值，只将属性值定义在properties文件中-->
+    <!--properties中还可以配置一些属性名和属性值  -->
+    <!-- <property name="jdbc.driver" value=""/> -->
+    <properties resource="db.properties"/>
+
+    <!--注意： MyBatis 将按照下面的顺序(优先级)来加载属性：-->
+    <!--在properties元素体内定义的属性首先被读取。-->
+    <!--然后会读取properties元素中resource或url加载的属性，它会覆盖已读取的同名属性。-->
+    <!--最后读取parameterType传递的属性，它会覆盖已读取的同名属性。-->
+
+    <!-- 别名定义 -->
+    <typeAliases>
+        <!-- 针对单个别名定义 type：类型的路径 alias：别名 -->
+        <typeAlias type="com.zzz.learn.mybatis.dao.domain.Product" alias="product1"/>
+        <!-- 指定po类的包名，批量别名定义，别名就是类名（首字母大写或小写都可以）-->
+        <package name="com.zzz.learn.mybatis.dao.domain"/>
+        <!--两个配置都在的话，同时都生效-->
+    </typeAliases>
+
+
+    <!-- 和spring整合后 environments配置将废除-->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用jdbc事务管理，事务控制由mybatis-->
+            <transactionManager type="JDBC"/>
+            <!-- 数据库连接池,由mybatis管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 加载映射文件-->
+    <mappers>
+        <!--通过mapper接口加载单个 映射文件，需要遵循：-->
+        <!--1.需要将mapper接口类名和mapper.xml映射文件名称保持一致-->
+        <!--2.在一个目录中-->
+        <!--3.使用的是mapper代理方法-->
+        <!--<mapper class="com.zzz.learn.mybatis.dao.ProductDao"/>-->
+        <mapper resource="mapper/productMapper.xml"/>
+        <!--批量加载mapper，需要遵循：-->
+        <!--1.需要将mapper接口类名和mapper.xml映射文件名称保持一致-->
+        <!--2.在一个目录中-->
+        <!--3.使用的是mapper代理方法-->
+        <!--<package name="com.zzz.learn.mybatis.dao"/>-->
+    </mappers>
+
+</configuration>

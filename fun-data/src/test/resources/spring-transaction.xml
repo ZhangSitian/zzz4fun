@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--dbcp数据源-->
+    <!--BasicDataSource提供了close()方法关闭数据源，所以必须设定destroy-method=”close”属性， 以便Spring容器关闭时，数据源能够正常关闭。-->
+    <bean id="dataSourceDBCP" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="10"/>
+    </bean>
+
+    <!--jdbc模板-->
+    <bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg ref="dataSourceDBCP"/>
+    </bean>
+
+    <!--Simple Template Dao Bean-->
+    <bean  id="simpleTemplateDao" class="com.zzz.learn.mybatis.dao.template.ProductSimpleTemplateDao">
+        <property name="simpleJdbcTemplate" ref="simpleJdbcTemplate"/>
+    </bean>
+
+
+    <!--Manager数据源 没有连接池-->
+    <bean id="dataSourceDriverManager" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!--jdbc模板-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSourceDriverManager"/>
+    </bean>
+
+    <!--Template Dao Bean-->
+    <bean  id="templateDao" class="com.zzz.learn.mybatis.dao.template.ProductTemplateDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+
+
+
+
+</beans>
+

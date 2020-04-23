@@ -1,0 +1,12 @@
+package %BASEPACKAGE%.po;
+
+import com.zzz.learn.mybatis.generate2.BasePo;
+%IMPORTS%
+
+public class %PONAME% extends BasePo{
+
+%FIELDS%
+
+%METHODS%
+
+}

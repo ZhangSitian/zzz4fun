@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
+ 注意：使用mapper代理方法开发，namespace有特殊重要的作用 -->
+<mapper namespace="com.zzz.learn.mybatis.dao.ProductMapper">
+
+    <!-- 定义resultMap
+	将SELECT id id_,username username_ FROM USER 和User类中的属性作一个映射关系
+
+	type：resultMap最终映射的java对象类型,可以使用别名
+	id：对resultMap的唯一标识
+	 -->
+    <resultMap type="product" id="productResultMap">
+        <!-- id表示查询结果集中唯一标识
+        column：查询出来的列名
+        property：type指定的pojo类型中的属性名
+        最终resultMap对column和property作一个映射关系 （对应关系）
+        -->
+        <id column="id" property="id"/>
+        <!--
+        result：对普通名映射定义
+        column：查询出来的列名
+        property：type指定的pojo类型中的属性名
+        最终resultMap对column和property作一个映射关系 （对应关系）
+         -->
+        <result column="productName" property="product_name"/>
+        <result column="productType" property="product_type"/>
+        <result column="leftNum" property="left_num"/>
+
+    </resultMap>
+
+    <select id="findProductById" parameterType="long" resultType="product1">
+    SELECT * FROM  product  WHERE id=#{value}
+</select>
+
+    <select id="findProductByVO" parameterType="ProductQueryVo" resultType="Product">
+        SELECT * FROM product
+        <where>
+            <include refid="query_product_where"/>
+        </where>
+    </select>
+    <select id="countProduct" parameterType="ProductQueryVo" resultType="int">
+    SELECT count(*) FROM  product
+
+    WHERE left_num =#{product.left_num}
+</select>
+
+    <select id="findProductByName" parameterType="String" resultMap="productResultMap">
+    SELECT id ,product_name productName, product_type productType,left_num leftNum FROM  product WHERE product_name =#{name}
+</select>
+
+    <!--sql片段-->
+    <sql id="query_product_where">
+        <if test="product!=null">
+            <if test="product.id!=null and product.id != '' ">
+                AND product.id=#{product.id}
+            </if>
+            <if test="product.product_name!=null and product.product_name != '' ">
+                AND product.product_name=#{product.product_name}
+            </if>
+            <if test="product.product_type!=null and product.product_type != '' ">
+                AND product.product_type=#{product.product_type}
+            </if>
+            <if test="product.left_num!=null and product.left_num != '' ">
+                AND product.left_num=#{product.left_num}
+            </if>
+        </if>
+    </sql>
+
+    <select id="findProductByIds" parameterType="java.util.List" resultType="Product">
+        SELECT * FROM product
+        <where>
+            <!-- 如果入参是list或array，则不会用参数名称，除非用@Param注解，否则就叫list-->
+            <if test="list!=null">
+                <!-- 使用 foreach遍历传入ids collection：指定输入 对象中集合属性 item：每个遍历生成对象中
+                open：开始遍历时拼接的串 close：结束遍历时拼接的串 separator：遍历的两个对象中需要拼接的串 -->
+                <foreach collection="list" item="product_id" open="AND id IN (" close=")" separator=",">
+                    <!-- 每个遍历需要拼接的串 -->
+                    #{product_id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,7 @@
+package %BASEPACKAGE%.dao;
+
+import com.zzz.learn.mybatis.generate2.BaseDao;
+import %BASEPACKAGE%.po.%PONAME%;
+
+public interface %DAONAME% extends BaseDao<%PONAME%> {
+}

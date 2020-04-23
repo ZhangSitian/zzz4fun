@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzz.learn.mybatis.generate2.dao.ProductDao">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+        INSERT INTO
+        <include refid="Table_Name"/>
+        <include refid="Selective_Insert_List"/>
+        VALUES
+        <include refid="Selective_Insert_Values"/>
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        id = #{id};
+    </select>
+
+    <select id="selectByIds" parameterType="java.lang.Long" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        id in (
+        <foreach item="item" index="index" collection="array"
+                 separator=","> #{item} </foreach>
+        );
+    </select>
+
+    <select id="selectByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+        LIMIT 0,1;
+    </select>
+
+    <select id="selectListByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+
+        <include refid="Order_By_Clause"/>;
+    </select>
+
+     <select id="countByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="int">
+            SELECT
+            COUNT(0)
+            FROM
+            <include refid="Table_Name"/>
+            WHERE
+            <include refid="Base_Select_Conditions"/>
+      </select>
+
+    <update id="updateById" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
+        <include refid="Base_Update_Values"/>
+        WHERE
+        id = #{record.id};
+    </update>
+
+    <update id="updateByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
+        <include refid="Base_Update_Values"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+    </update>
+
+
+    <sql id="Table_Name">
+        product
+    </sql>
+    <sql id="Base_Column_List">
+		id AS id,
+		product_name AS productName,
+		product_type AS productType,
+		left_num AS leftNum,
+		gmt_created AS gmtCreated,
+		gmt_modified AS gmtModified
+    </sql>
+    <sql id="Selective_Insert_List">
+        (
+        <trim suffixOverrides=",">
+		<if test="productName!=null and productName!=''">
+			product_name,
+		</if>
+		<if test="productType!=null and productType!=''">
+			product_type,
+		</if>
+		<if test="leftNum!=null and leftNum!=''">
+			left_num,
+		</if>
+
+        </trim>
+        )
+    </sql>
+    <sql id="Selective_Insert_Values">
+        (
+        <trim suffixOverrides=",">
+		<if test="productName!=null  and productName!=''">
+			#{productName},
+		</if>
+		<if test="productType!=null  and productType!=''">
+			#{productType},
+		</if>
+		<if test="leftNum!=null  and leftNum!=''">
+			#{leftNum},
+		</if>
+
+        </trim>
+        )
+    </sql>
+    <sql id="Base_Update_Values">
+        <trim suffixOverrides=",">
+		<if test="record.productName!=null and record.productName!=''">
+			product_name = #{record.productName},
+		</if>
+		<if test="record.productType!=null and record.productType!=''">
+			product_type = #{record.productType},
+		</if>
+		<if test="record.leftNum!=null and record.leftNum!=''">
+			left_num = #{record.leftNum},
+		</if>
+
+        </trim>
+    </sql>
+    <sql id="Base_Select_Conditions">
+        <trim prefixOverrides="AND">
+		<if test="condition.id!=null">
+			AND id = #{condition.id} 
+		</if>
+		<if test="condition.productName!=null and condition.productName!=''">
+			AND product_name = #{condition.productName} 
+		</if>
+		<if test="condition.productType!=null and condition.productType!=''">
+			AND product_type = #{condition.productType} 
+		</if>
+		<if test="condition.leftNum!=null and condition.leftNum!=''">
+			AND left_num = #{condition.leftNum} 
+		</if>
+
+        </trim>
+    </sql>
+    <sql id="Order_By_Clause">
+        <if test="condition.orderBy!=null and condition.orderBy!=''">
+            ORDER BY ${condition.orderBy}
+        </if>
+    </sql>
+</mapper>

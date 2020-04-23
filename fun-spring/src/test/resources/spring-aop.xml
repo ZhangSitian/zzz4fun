@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+">
+    <bean id="audience" class="com.zzz.learn.aspect.Audience"/>
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:pointcut id="performer" expression="execution(* com.zzz.learn.interfaces.Performer.perform(..))"/>
+            <aop:before method="before" pointcut-ref="performer"/>
+            <!--满足表达式并且bean的id不是duke的bean中-->
+            <aop:after method="after" pointcut-ref="performer"/>
+            <aop:after-returning method="afterReturn" pointcut-ref="performer"/>
+            <aop:after-throwing method="afterThrow" pointcut-ref="performer"/>
+            <aop:around method="around" pointcut-ref="performer"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="magician" class="com.zzz.learn.aspect.Magician"/>
+    <aop:config>
+        <aop:aspect ref="magician">
+            <aop:pointcut id="thinking"
+                          expression="execution(* com.zzz.learn.interfaces.Thinker.thinkOfSomething(String)) and args(thoughts)"/>
+            <aop:before method="interceptThoughts" pointcut-ref="thinking" arg-names="thoughts"/>
+        </aop:aspect>
+    </aop:config>
+    <!--为已知接口的实现类新增实现-->
+    <bean id="delegate" class="com.zzz.learn.aspect.GraciousContestant"/>
+    <aop:config>
+        <aop:aspect>
+            <aop:declare-parents types-matching="com.zzz.learn.interfaces.Performer+"
+                                 implement-interface="com.zzz.learn.interfaces.Contestant"
+                                 delegate-ref="delegate"/>
+        </aop:aspect>
+    </aop:config>
+    <!--自动创建代理类-->
+    <aop:aspectj-autoproxy/>
+    <bean id="volunteer" class="com.zzz.learn.domain.thinker.Volunteer"/>
+
+    <!--使用默认构造器构造实例-->
+    <bean id="duke" class="com.zzz.learn.domain.performer.Juggler"/>
+
+    <!--使用含参构造器构造实例-->
+    <bean id="dukeConstructor" class="com.zzz.learn.domain.performer.Juggler">
+        <constructor-arg value="15"/>
+    </bean>
+
+
+</beans>
+

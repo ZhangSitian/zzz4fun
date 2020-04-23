@@ -1,0 +1,97 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--使用默认构造器构造实例-->
+    <bean id="duke" class="com.zzz.learn.domain.performer.Juggler"/>
+    <bean id="duke1" class="com.zzz.learn.domain.performer.Juggler"/>
+
+    <!--使用含参构造器构造实例-->
+    <bean id="dukeConstructor" class="com.zzz.learn.domain.performer.Juggler">
+        <constructor-arg value="15"/>
+    </bean>
+
+    <!-- 通过构造器注入对象的引用 -->
+    <bean id="sonnet29" class="com.zzz.learn.domain.poem.Sonnet29"/>
+    <bean id="poeticDuke" class="com.zzz.learn.domain.performer.PoeticJuggler">
+        <constructor-arg value="15"/>
+        <constructor-arg ref="sonnet29"/>
+    </bean>
+
+    <!--通过静态方法构造bean-->
+    <bean id="theStage" class="com.zzz.learn.domain.Stage"
+          factory-method="getInstance"/>
+
+    <!--创建原型bean-->
+    <bean id="dukePrototype" class="com.zzz.learn.domain.performer.Juggler" scope="prototype"/>
+
+    <!--初始化方法和销毁方法-->
+    <bean id="auditorium" class="com.zzz.learn.domain.Auditorium"
+          init-method="turnOnLights" destroy-method="turnOffLights" />
+
+    <!--设置bean的属性，调用setter-->
+    <bean id="piano" class="com.zzz.learn.domain.instrument.Piano"/>
+    <bean id="saxophone" class="com.zzz.learn.domain.instrument.Saxophone"/>
+    <bean id="kenny" class="com.zzz.learn.domain.performer.Instrumentalist">
+        <property name="song" value="Jingle Bells"/>
+        <property name="instrument" ref="piano"/>
+    </bean>
+
+    <bean id="kenny1" class="com.zzz.learn.domain.performer.Instrumentalist">
+        <!--设置为空的属性-->
+        <property name="song" ><null/></property>
+        <property name="instrument">
+            <!--内部bean配置-->
+            <bean class="com.zzz.learn.domain.instrument.Saxophone"/>
+        </property>
+    </bean>
+
+    <bean id="hank" class="com.zzz.learn.domain.performer.OneManBand">
+        <property name="instruments">
+            <list>
+                <ref bean="piano"/>
+                <ref bean="piano"/>
+                <ref bean="saxophone"/>
+            </list>
+        </property>
+        <property name="instrumentsMap">
+            <props>
+                <prop key="piano">piano-value</prop>
+                <prop key="saxophone">saxophone-value</prop>
+
+            </props>
+        </property>
+    </bean>
+    <bean id="hank1" class="com.zzz.learn.domain.performer.OneManBand">
+        <property name="instruments">
+            <set>
+                <ref bean="piano"/>
+                <ref bean="saxophone"/>
+            </set>
+        </property>
+        <property name="instrumentsMap">
+            <map>
+                <entry key="piano" value-ref="piano"/>
+                <entry key="saxophone" value-ref="saxophone"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="values" class="com.zzz.learn.domain.Values">
+        <property name="booleanValue" value="#{false}"/>
+        <property name="intValue" value="#{100}"/>
+        <property name="floatValue" value="#{100.01}"/>
+        <property name="message" value="The value is #{(10 + 2) * 100 - 20}"/>
+        <property name="stringValue" value="#{'string'}"/>
+        <property name="instrument" value="#{piano}"/>
+        <!--字符串非空判断-->
+        <property name="song" value="#{kenny.song?.toUpperCase()}"/>
+        <property name="otherInstrument" value="#{kenny1.getInstrument()}"/>
+        <property name="random" value="#{T(Math).random()}"/>
+        <property name="someInstrument" value="#{hank.instruments[0]}"/>
+        <property name="someString" value="#{hank.instrumentsMap['piano']}"/>
+    </bean>
+
+</beans>
+
