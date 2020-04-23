@@ -14,6 +14,7 @@
         <module>fun-spring</module>
         <module>fun-mvc</module>
         <module>fun-springboot</module>
+        <module>fun-cache</module>
     </modules>
     <packaging>pom</packaging>
 
