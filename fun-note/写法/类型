@@ -1,0 +1,6 @@
+强转String
+    String.valueOf(key);
+    
+获取Enum类型
+    Enum.valueOf(typeName) throws IllegalArgumentException;
+
