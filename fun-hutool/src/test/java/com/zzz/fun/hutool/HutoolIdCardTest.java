@@ -2,6 +2,8 @@ package com.zzz.fun.hutool;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.IdcardUtil;
 import cn.hutool.core.util.ReUtil;
 import org.junit.Assert;
@@ -9,11 +11,12 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class HutoolIdCardTest {
 
     @Test
-    public void IdcardUtil() {
+    public void idCardUtil() {
         String ID_18 = "321083197812162119";
         String ID_15 = "150102880730303";
 
@@ -47,6 +50,14 @@ public class HutoolIdCardTest {
 
         String province2 = IdcardUtil.getProvinceByIdCard(ID_15);
         Assert.assertEquals(province2, "内蒙古");
+    }
+
+    @Test
+    public void idUtil() {
+        Snowflake snowflake = IdUtil.createSnowflake(1, 1);
+        System.out.println(IdUtil.simpleUUID());
+        System.out.println(snowflake.nextId());
+        System.out.println(IdUtil.objectId());
     }
 
 
