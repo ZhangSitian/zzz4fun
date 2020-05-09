@@ -1,13 +1,13 @@
 package com.zzz.learn.proxy;
 
-import org.springframework.cglib.proxy.InvocationHandler;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class SubjectProxy implements InvocationHandler {
+public class JDKProxy implements InvocationHandler {
     private Subject subject;
 
-    public SubjectProxy(Subject subject) {
+    public JDKProxy(Subject subject) {
         this.subject = subject;
     }
 

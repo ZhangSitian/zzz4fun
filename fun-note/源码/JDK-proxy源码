@@ -1,14 +1,23 @@
-Subject subject = new SubjectImpl() 创建实现类
-InvocationHandler subjectProxy = new SubjectProxy(subject) 将实现类放入代理类
-Proxy.newProxyInstance(subjectProxy.getClass().getClassLoader(), subject.getClass().getInterfaces(), subjectProxy) 生成代理类
-    newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h) 获取到代理类的类加载器，被代理的接口，代理实例
-        getProxyClass(loader, interfaces) 创建代理类
-            Enhancer e = new Enhancer() 创建类生成器
-            e.setSuperclass(Proxy.ProxyImpl.class) 继承父类Proxy.ProxyImpl.class
-            e.setInterfaces(interfaces) 实现被代理接口
-            e.setCallbackTypes(new Class[]{InvocationHandler.class, NoOp.class})
-            e.setCallbackFilter(BAD_OBJECT_METHOD_FILTER)
-            e.setUseFactory(false)
-            return e.createClass() 动态创建代理类
-        return clazz.getConstructor(InvocationHandler.class).newInstance(h) 创建代理对象
-proxyInstance.hello("world") 调用代理类
+Subject subject = new SubjectImpl()
+如何代理SubjectImpl implements Subject？
+    1.创建代理类
+        代理类要实现Subject
+        代理类要知道代理逻辑 InvocationHandler
+        代理类的创建需要类加载器？
+        生成代理类的字节码 ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
+        加载到jvm中 Proxy.defineClass0()
+    2.创建代理对象 
+        创建代理对象 cons.newInstance(new Object[]{h})
+        调用代理逻辑 super.h.invoke(this, method, args)
+
+1.代理类为什么一定要继承Proxy
+    a.代理类都持有一个InvocationHandler。所以基于此，抽象出一个父类Proxy。
+    b.有人说是因为判断类型方便，瞎说，人家是用一个叫isAssignableFrom的native方法判断是否是动态代理类。
+    c.代理接口与继承类相比会消耗大量的内存，所以通过继承Proxy类来限制你
+    总结：基本上都是针对继承方式实现代理类所存在的问题。
+        代理的初衷是在原实现上新增实现（实现接口），而不是拷贝原实现并扩展实现（继承父类）。
+
+2.被代理对象的类加载器有什么用
+
+
+

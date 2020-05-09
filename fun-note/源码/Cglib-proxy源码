@@ -1,0 +1,31 @@
+基于继承
+
+
+
+
+Subject subject = new SubjectImpl() 创建实现类
+InvocationHandler subjectProxy = new SubjectProxy(subject) 将实现类放入代理类
+Proxy.newProxyInstance(subjectProxy.getClass().getClassLoader(), subject.getClass().getInterfaces(), subjectProxy) 生成代理类
+    newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h) 获取到代理类的类加载器，被代理的接口，代理实例
+        getProxyClass(loader, interfaces) 创建代理类
+            Enhancer e = new Enhancer() 创建类生成器
+            e.setSuperclass(Proxy.ProxyImpl.class) 继承父类Proxy.ProxyImpl.class
+            e.setInterfaces(interfaces) 实现被代理接口
+            e.setCallbackTypes(new Class[]{InvocationHandler.class, NoOp.class})
+            e.setCallbackFilter(BAD_OBJECT_METHOD_FILTER)
+            e.setUseFactory(false)
+            return e.createClass() 动态创建代理类
+        return clazz.getConstructor(InvocationHandler.class).newInstance(h) 创建代理对象
+proxyInstance.hello("world") 调用代理类
+
+
+
+Enhancer enhancer = new Enhancer() 创建类生成器
+enhancer.setSuperclass(SubjectImpl.class) 继承父类
+enhancer.setUseCache(false) 不使用缓存
+enhancer.setCallback(new MethodInterceptor()) 创建回调（代理逻辑）
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) 实现地理逻辑
+Subject enhancerObj = (Subject) enhancer.create() 创建代理对象
+enhancerObj.hello("world") 调用代理类
+
+

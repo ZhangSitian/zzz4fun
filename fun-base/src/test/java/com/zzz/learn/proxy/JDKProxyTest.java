@@ -1,37 +1,33 @@
 package com.zzz.learn.proxy;
 
 import org.junit.Test;
-import org.springframework.cglib.proxy.*;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 
 public class JDKProxyTest {
 
     @Test
     public void testJDK(){
         Subject subject = new SubjectImpl();
-        InvocationHandler subjectProxy = new SubjectProxy(subject);
+        InvocationHandler subjectProxy = new JDKProxy(subject);
         Subject proxyInstance = (Subject) Proxy.newProxyInstance(subjectProxy.getClass().getClassLoader(), subject.getClass().getInterfaces(), subjectProxy);
         proxyInstance.hello("world");
     }
 
     @Test
-    public void testEnhancer(){
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(SubjectImpl.class);
-        enhancer.setUseCache(false);
-        enhancer.setCallback(new MethodInterceptor() {
-            @Override
-            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-                System.out.println("before "+method);
-                //此处不可以使用invoke方法需使用invokeSuper否则会进入递归循环
-                Object result = methodProxy.invokeSuper(o,objects);
-                System.out.println("after "+method);
-                return result;
-            }
-        });
-        Subject enhancerObj = (Subject) enhancer.create();
-        enhancerObj.hello("world");
+    public void testJDKDynamicProxy(){
+        // 保存生成的代理类的字节码文件，这句在test方法里不生效
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+        // jdk动态代理测试
+        Subject subject = new JDKDynamicProxy(new SubjectImpl()).getProxy();
+        subject.hello("world");
     }
+
+    public static void main(String[] args) {
+        new JDKProxyTest().testJDKDynamicProxy();
+    }
+
+
 
 }
