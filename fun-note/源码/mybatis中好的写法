@@ -1,3 +1,10 @@
+强转String
+    String.valueOf(key);
+    
+获取Enum类型
+    Enum.valueOf(typeName) throws IllegalArgumentException;
+
+
 enum遍历优化写法
     private static Map<Integer,JdbcType> codeLookup = new HashMap<Integer,JdbcType>();
     //一开始就将数字对应的枚举型放入hashmap
@@ -12,5 +19,9 @@ enum遍历优化写法
 
 异常处理
     org.apache.ibatis.executor.ErrorContext
+
+Builder
+    org.apache.ibatis.mapping.Environment.Builder
+    new Environment.Builder(id).transactionFactory(xx).dataSource(xx).build();
 
 

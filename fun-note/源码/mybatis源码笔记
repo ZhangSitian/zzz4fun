@@ -82,6 +82,14 @@ SqlSessionFactoryBuilder.build() 构建sqlSessionFactory
                             resultMapElements(context.evalNodes("/mapper/resultMap")) 配置resultMap(高级功能)
                             sqlElement(context.evalNodes("/mapper/sql")) 配置sql(定义可重用的 SQL 代码段)
                             buildStatementFromContext(context.evalNodes("select|insert|update|delete")) 配置select|insert|update|delete
+                                statementParser.parseStatementNode() 解析sql片段
+                                    langDriver.createSqlSource(configuration, context, parameterTypeClass) 
+                                        builder.parseScriptNode()
+                                            new RawSqlSource(configuration, rootSqlNode, parameterType)
+                                                sqlSourceParser.parse(sql, clazz, new HashMap<String, Object>()) 传个空参数，先加载一下
+                                    builderAssistant.addMappedStatement
+                                        MappedStatement statement = statementBuilder.build() 创建statement
+                                    configuration.addMappedStatement(statement) mappedStatements
                         configuration.addLoadedResource(resource) 标记已加载
                         bindMapperForNamespace() 绑定映射器到namespace
                             boundType = Resources.classForName(namespace) 读取Mapper接口类
@@ -123,6 +131,8 @@ org.apache.ibatis.binding.MapperProxy#invoke 代理对象执行
                         configuration.getMappedStatement(statement) 根据statementId找到对应的MappedStatement
                         executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER) 用执行器查询结果
                             ms.getBoundSql(parameter) 得到绑定sql
+                                rootSqlNode.apply(context) 替换${}为参数
+                                sqlSourceParser.parse(context.getSql(), parameterType, context.getBindings()) 替换#{}中间的部分
                             createCacheKey(ms, parameter, rowBounds, boundSql) 创建缓存Key
                             query(ms, parameter, rowBounds, resultHandler, key, boundSql) 查询结果
                                 list = resultHandler == null ? (List<E>) localCache.getObject(key) : null 先查缓存
@@ -131,6 +141,14 @@ org.apache.ibatis.binding.MapperProxy#invoke 代理对象执行
                                 deferredLoad.load() 延迟加载队列中所有元素
                                 deferredLoads.clear() 清空延迟加载队列
                                 clearLocalCache() 如果是STATEMENT，清本地缓存
+                                delegate.<E> query(ms, parameterObject, rowBounds, resultHandler, key, boundSql)
+                                    list = resultHandler == null ? (List<E>) localCache.getObject(key) : null 【一级缓存】先从缓存中取
+                                    queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql) 从数据库中查询
+                                        doQuery(ms, parameter, rowBounds, resultHandler, boundSql)
+                                            prepareStatement(handler, ms.getStatementLog())
+
+mybatis执行sql时，${}是在mybatis中直接将参数加进去，#{}被替换为？，直接使用jdbc方式调用
+
 
 sqlSession.close() 关闭sqlSession
     executor.close(isCommitOrRollbackRequired(false))
