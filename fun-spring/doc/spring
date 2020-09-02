@@ -1,0 +1,39 @@
+使用容器
+    常规ApplicationContext
+        // xml ApplicationContext
+        ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
+
+        // Groovy ApplicationContext
+        ApplicationContext context = new GenericGroovyApplicationContext("services.groovy", "daos.groovy");
+
+
+        // retrieve configured instance
+        PetStoreService service = context.getBean("petStore", PetStoreService.class);
+        实际使用时不应该调用getBean，会依赖spring的api
+
+    最灵活的GenericApplicationContext
+        // xml ApplicationContext
+        GenericApplicationContext context = new GenericApplicationContext();
+        new XmlBeanDefinitionReader(context).loadBeanDefinitions("services.xml", "daos.xml");
+        context.refresh();
+
+        // Groovy ApplicationContext
+        GenericApplicationContext context = new GenericApplicationContext();
+        new GroovyBeanDefinitionReader(context).loadBeanDefinitions("services.groovy", "daos.groovy");
+        context.refresh();
+
+容器构成
+    BeanFactory
+    
+    DefaultListableBeanFactory
+
+    BeanDefinition
+        Class：类定义
+        Name：类名称
+        Scope：bean范围
+        Constructor arguments：构造参数
+        Properties：属性
+        Autowiring mode：注入模型
+        Lazy initialization mode：初始化模型
+        Initialization method：初始化方法
+        Destruction method：销毁方法
