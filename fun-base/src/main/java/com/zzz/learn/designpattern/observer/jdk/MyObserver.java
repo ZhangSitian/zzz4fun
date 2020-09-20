@@ -1,4 +1,4 @@
-package com.zzz.learn.observer;
+package com.zzz.learn.designpattern.observer.jdk;
 
 import com.zzz.learn.queue.AsyncHandler;
 
