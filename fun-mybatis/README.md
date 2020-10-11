@@ -189,7 +189,7 @@
     
     - 局部开启
         ```xml
-        <mapper namespace="com.zzz.learn.mybatis.dao.UserMapper">
+        <mapper namespace="com.zzz.fun.mybatis.dao.UserMapper">
         <!-- 开启本mapper的namespace下的二级缓存-->
         <cache />
         </mapper>
@@ -203,7 +203,7 @@
      
     - 刷新（清空）缓存
       ```xml
-        <insert id="insertUser" parameterType="com.zzz.learn.mybatis.dao.domain.User" flushCache="true">
+        <insert id="insertUser" parameterType="com.zzz.fun.mybatis.dao.domain.User" flushCache="true">
          </insert>
       ```
       

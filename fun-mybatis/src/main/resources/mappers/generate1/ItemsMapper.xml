@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zzz.learn.mybatis.generate1.mapper.ItemsMapper">
-  <resultMap id="BaseResultMap" type="com.zzz.learn.mybatis.generate1.po.Items">
+<mapper namespace="com.zzz.fun.mybatis.generate1.mapper.ItemsMapper">
+  <resultMap id="BaseResultMap" type="com.zzz.fun.mybatis.generate1.po.Items">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="price" jdbcType="REAL" property="price" />
     <result column="pic" jdbcType="VARCHAR" property="pic" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zzz.learn.mybatis.generate1.po.Items">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zzz.fun.mybatis.generate1.po.Items">
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,7 +75,7 @@
   <sql id="Blob_Column_List">
     detail
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.zzz.learn.mybatis.generate1.po.ItemsExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="com.zzz.fun.mybatis.generate1.po.ItemsExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -91,7 +91,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.zzz.learn.mybatis.generate1.po.ItemsExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.zzz.fun.mybatis.generate1.po.ItemsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -117,13 +117,13 @@
     delete from items
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zzz.learn.mybatis.generate1.po.ItemsExample">
+  <delete id="deleteByExample" parameterType="com.zzz.fun.mybatis.generate1.po.ItemsExample">
     delete from items
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zzz.learn.mybatis.generate1.po.Items">
+  <insert id="insert" parameterType="com.zzz.fun.mybatis.generate1.po.Items">
     insert into items (id, name, price, 
       pic, create_time, detail
       )
@@ -131,7 +131,7 @@
       #{pic,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{detail,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zzz.learn.mybatis.generate1.po.Items">
+  <insert id="insertSelective" parameterType="com.zzz.fun.mybatis.generate1.po.Items">
     insert into items
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -174,7 +174,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zzz.learn.mybatis.generate1.po.ItemsExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.zzz.fun.mybatis.generate1.po.ItemsExample" resultType="java.lang.Long">
     select count(*) from items
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -229,7 +229,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zzz.learn.mybatis.generate1.po.Items">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzz.fun.mybatis.generate1.po.Items">
     update items
     <set>
       <if test="name != null">
@@ -250,7 +250,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zzz.learn.mybatis.generate1.po.Items">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zzz.fun.mybatis.generate1.po.Items">
     update items
     set name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},
@@ -259,7 +259,7 @@
       detail = #{detail,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zzz.learn.mybatis.generate1.po.Items">
+  <update id="updateByPrimaryKey" parameterType="com.zzz.fun.mybatis.generate1.po.Items">
     update items
     set name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},

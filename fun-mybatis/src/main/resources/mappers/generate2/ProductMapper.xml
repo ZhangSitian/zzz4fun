@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zzz.learn.mybatis.generate2.dao.ProductDao">
+<mapper namespace="com.zzz.fun.mybatis.generate2.dao.ProductDao">
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zzz.fun.mybatis.generate2.po.Product">
         INSERT INTO
         <include refid="Table_Name"/>
         <include refid="Selective_Insert_List"/>
@@ -13,7 +13,7 @@
         <include refid="Selective_Insert_Values"/>
     </insert>
 
-    <select id="selectById" parameterType="java.lang.Long" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+    <select id="selectById" parameterType="java.lang.Long" resultType="com.zzz.fun.mybatis.generate2.po.Product">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -22,7 +22,7 @@
         id = #{id};
     </select>
 
-    <select id="selectByIds" parameterType="java.lang.Long" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+    <select id="selectByIds" parameterType="java.lang.Long" resultType="com.zzz.fun.mybatis.generate2.po.Product">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -34,7 +34,7 @@
         );
     </select>
 
-    <select id="selectByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+    <select id="selectByRecord" parameterType="com.zzz.fun.mybatis.generate2.po.Product" resultType="com.zzz.fun.mybatis.generate2.po.Product">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -44,7 +44,7 @@
         LIMIT 0,1;
     </select>
 
-    <select id="selectListByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="com.zzz.learn.mybatis.generate2.po.Product">
+    <select id="selectListByRecord" parameterType="com.zzz.fun.mybatis.generate2.po.Product" resultType="com.zzz.fun.mybatis.generate2.po.Product">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -55,7 +55,7 @@
         <include refid="Order_By_Clause"/>;
     </select>
 
-     <select id="countByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product" resultType="int">
+     <select id="countByRecord" parameterType="com.zzz.fun.mybatis.generate2.po.Product" resultType="int">
             SELECT
             COUNT(0)
             FROM
@@ -64,7 +64,7 @@
             <include refid="Base_Select_Conditions"/>
       </select>
 
-    <update id="updateById" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+    <update id="updateById" parameterType="com.zzz.fun.mybatis.generate2.po.Product">
         UPDATE
         <include refid="Table_Name"/>
         SET
@@ -73,7 +73,7 @@
         id = #{record.id};
     </update>
 
-    <update id="updateByRecord" parameterType="com.zzz.learn.mybatis.generate2.po.Product">
+    <update id="updateByRecord" parameterType="com.zzz.fun.mybatis.generate2.po.Product">
         UPDATE
         <include refid="Table_Name"/>
         SET

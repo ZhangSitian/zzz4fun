@@ -16,9 +16,9 @@
     <!-- 别名定义 -->
     <typeAliases>
         <!-- 针对单个别名定义 type：类型的路径 alias：别名 -->
-        <typeAlias type="com.zzz.learn.mybatis.dao.domain.Product" alias="product1"/>
+        <typeAlias type="com.zzz.fun.mybatis.dao.domain.Product" alias="product1"/>
         <!-- 指定po类的包名，批量别名定义，别名就是类名（首字母大写或小写都可以）-->
-        <package name="com.zzz.learn.mybatis.dao.domain"/>
+        <package name="com.zzz.fun.mybatis.dao.domain"/>
         <!--两个配置都在的话，同时都生效-->
     </typeAliases>
 
@@ -44,13 +44,13 @@
         <!--1.需要将mapper接口类名和mapper.xml映射文件名称保持一致-->
         <!--2.在一个目录中-->
         <!--3.使用的是mapper代理方法-->
-        <!--<mapper class="com.zzz.learn.mybatis.dao.ProductDao"/>-->
+        <!--<mapper class="com.zzz.fun.mybatis.dao.ProductDao"/>-->
         <mapper resource="mapper/productMapper.xml"/>
         <!--批量加载mapper，需要遵循：-->
         <!--1.需要将mapper接口类名和mapper.xml映射文件名称保持一致-->
         <!--2.在一个目录中-->
         <!--3.使用的是mapper代理方法-->
-        <!--<package name="com.zzz.learn.mybatis.dao"/>-->
+        <!--<package name="com.zzz.fun.mybatis.dao"/>-->
     </mappers>
 
 </configuration>

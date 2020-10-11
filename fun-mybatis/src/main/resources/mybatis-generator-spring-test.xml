@@ -40,7 +40,7 @@
         <!-- 指定扫描的包名
         如果扫描多个包，每个包中间使用半角逗号分隔
         -->
-        <property name="basePackage" value="com.zzz.learn.mybatis.generate1.mapper"/>
+        <property name="basePackage" value="com.zzz.fun.mybatis.generate1.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 </beans>

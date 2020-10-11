@@ -20,7 +20,7 @@
     </bean>
 
     <!--Simple Template Dao Bean-->
-    <bean  id="simpleTemplateDao" class="com.zzz.learn.mybatis.dao.template.ProductSimpleTemplateDao">
+    <bean  id="simpleTemplateDao" class="com.zzz.fun.mybatis.dao.template.ProductSimpleTemplateDao">
         <property name="simpleJdbcTemplate" ref="simpleJdbcTemplate"/>
     </bean>
 
@@ -47,7 +47,7 @@
     </bean>
 
     <!--Template Dao Bean-->
-    <bean  id="templateDao" class="com.zzz.learn.mybatis.dao.template.ProductTemplateDao">
+    <bean  id="templateDao" class="com.zzz.fun.mybatis.dao.template.ProductTemplateDao">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 

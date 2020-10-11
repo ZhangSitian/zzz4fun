@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 <typeAliases>
-    <typeAlias type="com.zzz.learn.mybatis.dao.domain.Product" alias="product1"/>
-    <package name="com.zzz.learn.mybatis.dao.domain"/>
+    <typeAlias type="com.zzz.fun.mybatis.dao.domain.Product" alias="product1"/>
+    <package name="com.zzz.fun.mybatis.dao.domain"/>
 </typeAliases>
     <!-- 加载映射文件-->
     <mappers>

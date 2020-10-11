@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 <typeAliases>
-    <package name="com.zzz.learn.mybatis.generate1.po"/>
+    <package name="com.zzz.fun.mybatis.generate1.po"/>
 </typeAliases>
 
 </configuration>

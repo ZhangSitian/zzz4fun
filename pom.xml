@@ -13,7 +13,6 @@
         <module>fun-data</module>
         <module>fun-spring</module>
         <module>fun-mvc</module>
-        <module>fun-springboot</module>
         <module>fun-cache</module>
         <module>fun-hutool</module>
     </modules>
@@ -23,7 +22,6 @@
 
     <properties>
         <spring.version>5.2.4.RELEASE</spring.version>
-        <slf4j.version>2.0.0-alpha1</slf4j.version>
         <slf4j.log4j2.version>2.13.0</slf4j.log4j2.version>
     </properties>
 
@@ -40,22 +38,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${slf4j.log4j2.version}</version>
@@ -68,6 +50,16 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>5.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -101,9 +93,9 @@
             </dependency>
             <!--与spring整合所需的依赖 end -->
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>5.3.6</version>
+                <version>6.1.5.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -169,6 +161,17 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>jstl</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp.jstl</groupId>
+                <artifactId>jstl-api</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <!-- jstl-impl -->
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>jstl-impl</artifactId>
                 <version>1.2</version>
             </dependency>
             <dependency>

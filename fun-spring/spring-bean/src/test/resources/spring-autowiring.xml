@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--使用byName注入-->
+    <bean id="instrument" class="com.zzz.fun.domain.instrument.Saxophone" />
+    <bean id="kenny" class="com.zzz.fun.domain.performer.Instrumentalist" autowire="byName">
+        <property name="song"  value="Jingle Bells"/>
+    </bean>
+
+    <!--使用byType注入-->
+    <bean id="kenny1" class="com.zzz.fun.domain.performer.Instrumentalist" autowire="byType">
+        <property name="song"  value="Jingle Bells"/>
+    </bean>
+
+    <!--使用constructor注入-->
+    <bean id="duke" class="com.zzz.fun.domain.performer.PoeticJuggler" autowire="constructor"/>
+    <!--bean定义的先后顺序不相关-->
+    <bean class="com.zzz.fun.domain.poem.Sonnet29"/>
+</beans>

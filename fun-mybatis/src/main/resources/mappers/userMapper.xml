@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zzz.learn.mybatis.dao.UserMapper">
+<mapper namespace="com.zzz.fun.mybatis.dao.UserMapper">
     <!-- 开启本mapper的namespace下的二级缓存，开启的情况下，引用类型必须要实现序列化方法-->
     <cache/>
 

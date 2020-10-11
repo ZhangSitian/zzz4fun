@@ -5,7 +5,7 @@
 
 <!-- namespace 命名空间，作用就是对sql进行分类化管理,理解为sql隔离
  注意：使用mapper代理方法开发，namespace有特殊重要的作用 -->
-<mapper namespace="com.zzz.learn.mybatis.dao.ProductMapper">
+<mapper namespace="com.zzz.fun.mybatis.dao.ProductMapper">
 
     <!-- 定义resultMap
 	将SELECT id id_,username username_ FROM USER 和User类中的属性作一个映射关系

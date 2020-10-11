@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zzz.learn.mybatis.dao.OrderMapper">
+<mapper namespace="com.zzz.fun.mybatis.dao.OrderMapper">
     <!-- 延迟加载的resultMap -->
     <resultMap type="Orders" id="OrdersUserLazyLoadingResultMap">
         <!--对订单信息进行映射配置  -->
@@ -23,7 +23,7 @@
          FROM orders
          -->
         <association property="user"  javaType="User"
-                     select="com.zzz.learn.mybatis.dao.UserMapper.findUserById"
+                     select="com.zzz.fun.mybatis.dao.UserMapper.findUserById"
                      column="user_id">
             <!-- 实现对用户信息进行延迟加载 -->
         </association>

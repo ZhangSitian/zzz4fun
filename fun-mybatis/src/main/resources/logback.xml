@@ -7,7 +7,7 @@
 		</encoder>
 	</appender>
 	
-	<logger name="com.zzz.learn.mybatis" level="DEBUG" />
+	<logger name="com.zzz.fun.mybatis" level="DEBUG" />
 	<logger name="org.apache.ibatis" level="DEBUG" />
 	<logger name="org.springframework" level="WARN" />
 

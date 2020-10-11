@@ -28,12 +28,12 @@
         <property name="dataSource" ref="dataSource" />
         <!-- 加载mybatis的配置文件 -->
         <property name="configLocation" value="config/mybatis-generator2-config.xml" />
-        <property name="typeAliasesPackage" value="com.zzz.learn.mybatis.generate2.po" />
+        <property name="typeAliasesPackage" value="com.zzz.fun.mybatis.generate2.po" />
         <property name="mapperLocations" value="classpath*:mappers/generate2/*Mapper.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zzz.learn.mybatis.generate2.dao"/>
+        <property name="basePackage" value="com.zzz.fun.mybatis.generate2.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
