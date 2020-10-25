@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzz.fun.mapper.dao.MrTblPhoneLocationDao">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        INSERT INTO
+        <include refid="Table_Name"/>
+        <include refid="Selective_Insert_List"/>
+        VALUES
+        <include refid="Selective_Insert_Values"/>
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        id = #{id};
+    </select>
+
+    <select id="selectByIds" parameterType="java.lang.Long" resultType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        id in (
+        <foreach item="item" index="index" collection="array"
+                 separator=","> #{item} </foreach>
+        );
+    </select>
+
+    <select id="selectByRecord" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation" resultType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+        LIMIT 0,1;
+    </select>
+
+    <select id="selectListByRecord" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation" resultType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+
+        <include refid="Order_By_Clause"/>
+    </select>
+
+     <select id="countByRecord" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation" resultType="int">
+            SELECT
+            COUNT(0)
+            FROM
+            <include refid="Table_Name"/>
+            WHERE
+            <include refid="Base_Select_Conditions"/>
+      </select>
+
+    <update id="updateById" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
+        <include refid="Base_Update_Values"/>
+        WHERE
+        id = #{record.id};
+    </update>
+
+    <update id="updateByRecord" parameterType="com.zzz.fun.mapper.po.MrTblPhoneLocation">
+        UPDATE
+        <include refid="Table_Name"/>
+        SET
+        <include refid="Base_Update_Values"/>
+        WHERE
+        <include refid="Base_Select_Conditions"/>
+    </update>
+
+
+    <sql id="Table_Name">
+        mr_tbl_phone_location
+    </sql>
+    <sql id="Base_Column_List">
+		id AS id,
+		mobile_prefix AS mobilePrefix,
+		province AS province,
+		city AS city,
+		operator AS operator,
+		area_code AS areaCode,
+		post_code AS postCode,
+		gmt_created AS gmtCreated,
+		gmt_modified AS gmtModified
+    </sql>
+    <sql id="Selective_Insert_List">
+        (
+        <trim suffixOverrides=",">
+		<if test="mobilePrefix!=null and mobilePrefix!=''">
+			mobile_prefix,
+		</if>
+		<if test="province!=null and province!=''">
+			province,
+		</if>
+		<if test="city!=null and city!=''">
+			city,
+		</if>
+		<if test="operator!=null and operator!=''">
+			operator,
+		</if>
+		<if test="areaCode!=null and areaCode!=''">
+			area_code,
+		</if>
+		<if test="postCode!=null and postCode!=''">
+			post_code,
+		</if>
+
+        </trim>
+        )
+    </sql>
+    <sql id="Selective_Insert_Values">
+        (
+        <trim suffixOverrides=",">
+		<if test="mobilePrefix!=null  and mobilePrefix!=''">
+			#{mobilePrefix},
+		</if>
+		<if test="province!=null  and province!=''">
+			#{province},
+		</if>
+		<if test="city!=null  and city!=''">
+			#{city},
+		</if>
+		<if test="operator!=null  and operator!=''">
+			#{operator},
+		</if>
+		<if test="areaCode!=null  and areaCode!=''">
+			#{areaCode},
+		</if>
+		<if test="postCode!=null  and postCode!=''">
+			#{postCode},
+		</if>
+
+        </trim>
+        )
+    </sql>
+    <sql id="Base_Update_Values">
+        <trim suffixOverrides=",">
+		<if test="record.mobilePrefix!=null and record.mobilePrefix!=''">
+			mobile_prefix = #{record.mobilePrefix},
+		</if>
+		<if test="record.province!=null and record.province!=''">
+			province = #{record.province},
+		</if>
+		<if test="record.city!=null and record.city!=''">
+			city = #{record.city},
+		</if>
+		<if test="record.operator!=null and record.operator!=''">
+			operator = #{record.operator},
+		</if>
+		<if test="record.areaCode!=null and record.areaCode!=''">
+			area_code = #{record.areaCode},
+		</if>
+		<if test="record.postCode!=null and record.postCode!=''">
+			post_code = #{record.postCode},
+		</if>
+
+        </trim>
+    </sql>
+    <sql id="Base_Select_Conditions">
+        <trim prefixOverrides="AND">
+		<if test="condition.id!=null">
+			AND id = #{condition.id} 
+		</if>
+		<if test="condition.mobilePrefix!=null and condition.mobilePrefix!=''">
+			AND mobile_prefix = #{condition.mobilePrefix} 
+		</if>
+		<if test="condition.province!=null and condition.province!=''">
+			AND province = #{condition.province} 
+		</if>
+		<if test="condition.city!=null and condition.city!=''">
+			AND city = #{condition.city} 
+		</if>
+		<if test="condition.operator!=null and condition.operator!=''">
+			AND operator = #{condition.operator} 
+		</if>
+		<if test="condition.areaCode!=null and condition.areaCode!=''">
+			AND area_code = #{condition.areaCode} 
+		</if>
+		<if test="condition.postCode!=null and condition.postCode!=''">
+			AND post_code = #{condition.postCode} 
+		</if>
+
+        </trim>
+    </sql>
+    <sql id="Order_By_Clause">
+        <if test="condition.orderBy!=null and condition.orderBy!=''">
+            ORDER BY ${condition.orderBy}
+        </if>
+    </sql>
+</mapper>

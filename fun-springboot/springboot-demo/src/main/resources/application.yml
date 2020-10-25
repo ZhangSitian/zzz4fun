@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: springboot-demo
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mind-mysql:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+
+  redis:
+    host: mind-redis
+    port: 6379
+    password:
+    timeout: 3000
+
+
+mybatis:
+  type-aliases-package: com.zzz.fun.mapper.po
+  mapper-locations: classpath*:mappers/*.xml
+
+server:
+  port: 8080
