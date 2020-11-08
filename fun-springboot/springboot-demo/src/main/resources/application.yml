@@ -21,3 +21,7 @@ mybatis:
 
 server:
   port: 8080
+
+
+  book:
+    name: application.yml
