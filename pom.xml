@@ -15,6 +15,8 @@
         <module>fun-mvc</module>
         <module>fun-cache</module>
         <module>fun-hutool</module>
+        <module>fun-apollo</module>
+        <module>fun-kafka</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -22,7 +24,6 @@
 
     <properties>
         <spring.version>5.2.4.RELEASE</spring.version>
-        <slf4j.log4j2.version>2.13.0</slf4j.log4j2.version>
     </properties>
 
     <dependencies>
@@ -36,11 +37,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${slf4j.log4j2.version}</version>
         </dependency>
     </dependencies>
 

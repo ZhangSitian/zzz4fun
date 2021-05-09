@@ -1,4 +1,4 @@
-package com.zzz.fun.cache;
+package com.zzz.fun;
 
 import com.google.common.cache.*;
 import org.junit.Assert;
